@@ -54,15 +54,15 @@ public class UniversCom {
     }
 
 
-    //поиск по id
-    public static Univers show(int id) {
+    //поиск по title
+    public static Univers show(String title) {
         Univers univers = null;
 
         try {
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("SELECT * FROM university WHERE idunivers=?");
+                    connection.prepareStatement("SELECT * FROM university WHERE title=?");
 
-            preparedStatement.setInt(1, id);
+            preparedStatement.setString(1, title);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 

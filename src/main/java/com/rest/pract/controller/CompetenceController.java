@@ -2,6 +2,7 @@ package com.rest.pract.controller;
 import com.rest.pract.models.*;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rest.pract.component.CompetenceCom;
 import com.rest.pract.component.StudentCom;
 import com.rest.pract.component.UniversCom;
 import com.rest.pract.models.Univers;
@@ -31,44 +32,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
-class StudentConroller {
+public class CompetenceController {
+    
+private final CompetenceCom competenceCom;
 
-    @RequestMapping("/teststudents")
-    public String index() {
-        return "Greetings from Spring Boot!";
+public CompetenceController(CompetenceCom competenceCom) {
+    this.competenceCom = competenceCom;
+}
+
+@PostMapping(value="/competence")
+    Competence create(@RequestBody Competence competence) {
+        CompetenceCom.save(competence);
+        return competence;
     }
 
-    private final StudentCom studentCom;
 
 
-    public StudentConroller (StudentCom studentCom){
-        this.studentCom = studentCom;
-    }
 
-    @PostMapping(value="/student")
-    Student create(@RequestBody Student student) {
-        StudentCom.save(student);
-        return student;
-    }
-
-    @GetMapping(value = "/student")
-    public String indexs() {
-        return UniversCom.index().toString();
-    }
-
-    @GetMapping(value = "/student/{id}")
-    public String show(@PathVariable("id") int id) {
-        return StudentCom.show(id).toString();
-    }
-    @PatchMapping("/student/{id}")
-    public String update(@ModelAttribute("student") @Valid Student student, BindingResult bindingResult,@PathVariable("id") int id) {
-        StudentCom.update(id, student);
-        return "OK";
-    }
-
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id) {
-        StudentCom.delete(id);
-        return "OK deletes";
-    }
 }

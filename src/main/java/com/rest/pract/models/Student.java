@@ -130,4 +130,20 @@ public class Student {
         this.id_university=id_university;
     }
     public Student(){}
+
+    @Override
+    public String toString() {
+        return "{"+
+        "idstudent="+ idstudent+
+        " ,gender="+gender+
+        " ,phone="+phone+
+        " ,city="+city+
+        " ,email="+email+
+        " ,dateofbirth="+dateofbirth+
+        " ,firstname="+firstname+
+        " ,lastname="+lastname+
+        " ,patronimic="+patronimic+
+        " ,id_statement="+id_statement+
+        " ,id_university="+id_university+"}";
+    }
 }

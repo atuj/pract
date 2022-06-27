@@ -2,6 +2,7 @@ package com.rest.pract.controller;
 import com.rest.pract.models.*;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rest.pract.component.PracticMentorCom;
 import com.rest.pract.component.StudentCom;
 import com.rest.pract.component.UniversCom;
 import com.rest.pract.models.Univers;
@@ -31,44 +32,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
-class StudentConroller {
+public class PracticMentorController {
+    private final PracticMentorCom practicMentorCom;
 
-    @RequestMapping("/teststudents")
-    public String index() {
-        return "Greetings from Spring Boot!";
+
+    public PracticMentorController (PracticMentorCom practicMentorCom){
+        this.practicMentorCom = practicMentorCom;
     }
 
-    private final StudentCom studentCom;
-
-
-    public StudentConroller (StudentCom studentCom){
-        this.studentCom = studentCom;
+    @PostMapping(value="/practicmentor")
+    PracticMentor create(@RequestBody PracticMentor practicMentor) {
+        PracticMentorCom.save(practicMentor);
+        return practicMentor;
     }
-
-    @PostMapping(value="/student")
-    Student create(@RequestBody Student student) {
-        StudentCom.save(student);
-        return student;
-    }
-
-    @GetMapping(value = "/student")
-    public String indexs() {
-        return UniversCom.index().toString();
-    }
-
-    @GetMapping(value = "/student/{id}")
-    public String show(@PathVariable("id") int id) {
-        return StudentCom.show(id).toString();
-    }
-    @PatchMapping("/student/{id}")
-    public String update(@ModelAttribute("student") @Valid Student student, BindingResult bindingResult,@PathVariable("id") int id) {
-        StudentCom.update(id, student);
+    @PatchMapping("/practicmentor/{id}")
+    public String update(@ModelAttribute("practic") @Valid PracticMentor practicMentor, BindingResult bindingResult,@PathVariable("id") int id) {
+        PracticMentorCom.update(id, practicMentor);
         return "OK";
-    }
-
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id) {
-        StudentCom.delete(id);
-        return "OK deletes";
     }
 }

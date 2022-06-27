@@ -1,7 +1,10 @@
 package com.rest.pract.controller;
+
 import com.rest.pract.models.*;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rest.pract.component.MentorCom;
 import com.rest.pract.component.UniversCom;
 import com.rest.pract.models.Univers;
 
@@ -17,8 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,44 +31,38 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
-class UnivConroller {
+class MentorController {
 
-    @RequestMapping("/")
-    public String index() {
-        return "Greetings from Spring Boot!";
+    private final MentorCom mentorCom;
+
+
+    public MentorController (MentorCom mentorCom){
+        this.mentorCom = mentorCom;
     }
 
-    private final UniversCom universCom;
-    //private final UniversRepository repository;
-
-    //public UnivConroller(UniversRepository repository){
-    //    this.repository = repository;
-    //}
-
-    public UnivConroller (UniversCom universCom){
-        this.universCom = universCom;
+    @PostMapping(value="/dmentor")
+    Mentor create(@RequestBody Mentor mentor) {
+        System.out.println(mentor);
+        MentorCom.save(mentor);
+        return mentor;
     }
 
-    //Employee replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id)
-    @PostMapping(value="/universe")
-    //Univers create(@ModelAttribute("univers") @Valid Univers univers, BindingResult bindingResult) {
-        Univers create(@RequestBody Univers univers) {   
-            System.out.println(univers);
-        UniversCom.save(univers);
-        return univers;
-    }
-
-    @GetMapping(value = "/universe")
+    @GetMapping(value = "/dmentor")
     public String index(Model model) {
         //model.addAttribute("universe", );
         //return model.toString();
-        return UniversCom.index().toString();
+        return MentorCom.index().toString();
+    }
+    @DeleteMapping(value = "/dmentor/{id}")
+    public String delete(@PathVariable("id") int id, Model model) {
+        return MentorCom.delete(id);
     }
 
-    @GetMapping(value = "/universe/{title}")
-    public String show(@PathVariable("title") String title, Model model) {
+    @GetMapping(value = "/dmentor/{id}")
+    public String show(@PathVariable("id") int id, Model model) {
         //model.addAttribute("universe", UniversCom.show(id));
-        return UniversCom.show(title).toString();
-    }  
+        return MentorCom.show(id).toString();
+    }
+
 
 }
