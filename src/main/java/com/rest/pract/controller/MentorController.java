@@ -9,6 +9,8 @@ import com.rest.pract.component.UniversCom;
 import com.rest.pract.models.Univers;
 
 import antlr.collections.List;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -31,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
+@Api(description = "Контроллер для работы с DMENTOR")
 class MentorController {
 
     private final MentorCom mentorCom;
@@ -39,26 +42,30 @@ class MentorController {
     public MentorController (MentorCom mentorCom){
         this.mentorCom = mentorCom;
     }
-
+    
     @PostMapping(value="/dmentor")
+    @ApiOperation("Добавление нового наставника")
     Mentor create(@RequestBody Mentor mentor) {
         System.out.println(mentor);
         MentorCom.save(mentor);
         return mentor;
     }
-
+    
     @GetMapping(value = "/dmentor")
+    @ApiOperation("Получение списка всех наставников")
     public String index(Model model) {
         //model.addAttribute("universe", );
         //return model.toString();
         return MentorCom.index().toString();
     }
     @DeleteMapping(value = "/dmentor/{id}")
+    @ApiOperation("Удалене наставника")
     public String delete(@PathVariable("id") int id, Model model) {
         return MentorCom.delete(id);
     }
 
     @GetMapping(value = "/dmentor/{id}")
+    @ApiOperation("Получение наставника по ID")
     public String show(@PathVariable("id") int id, Model model) {
         //model.addAttribute("universe", UniversCom.show(id));
         return MentorCom.show(id).toString();
