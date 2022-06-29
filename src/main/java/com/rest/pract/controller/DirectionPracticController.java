@@ -9,6 +9,8 @@ import com.rest.pract.component.UniversCom;
 import com.rest.pract.models.Univers;
 
 import antlr.collections.List;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -32,22 +34,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
+@Api(description = "Контроллер для работы с DIRECTIONPRACTIC")
 class DirectionPracticController {
-
-    @RequestMapping("/directionpractic")
-    public String index() {
-        return "Greetings from Spring Boot!";
-    }
-
     private final DirectionPracticCom directionPracticCom;
-
 
     public DirectionPracticController(DirectionPracticCom directionPracticCom) {
         this.directionPracticCom = directionPracticCom;
     }
 
-
     @PostMapping(value="/directionpractic")
+    @ApiOperation("Добавление нового направления практики")
     DirectionPractic create(@RequestBody DirectionPractic directionPractic) {
         System.out.println(directionPractic);
         DirectionPracticCom.save(directionPractic);
@@ -55,12 +51,14 @@ class DirectionPracticController {
     }
 
     @GetMapping(value = "/directionpractic")
+    @ApiOperation("Получение списка всех направлений")
     public String index(Model model) {
         //model.addAttribute("universe", );
         //return model.toString();
         return com.rest.pract.component.DirectionPracticCom.index().toString();
     }
     @DeleteMapping(value = "/directionpractic/{id}")
+    @ApiOperation("Удаление направления практики по ID")
     public String delete(@PathVariable("id") int id, Model model) {
         return com.rest.pract.component.DirectionPracticCom.delete(id);
     }

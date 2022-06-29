@@ -29,37 +29,35 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
+@Api(description = "Контроллер для работы с PROGRAMPRACTIC")
 class ProgramPracticController {
 
-    @RequestMapping("/mentortest")
-    public String index() {
-        return "Greetings from Spring Boot!";
-    }
-
     private final ProgramPracticCom programPracticCom;
-
-
     public ProgramPracticController(ProgramPracticCom programPracticCom) {
         this.programPracticCom = programPracticCom;
     }
 
-    @PostMapping(value="/mentor")
+    @PostMapping(value="programpractic")
+    @ApiOperation("Добавление новой программы практики")
     ProgramPractic create(@RequestBody ProgramPractic programPractic) {
         System.out.println(programPractic);
         ProgramPracticCom.save(programPractic);
         return programPractic;
     }
 
-    @GetMapping(value = "/mentor")
+    @GetMapping(value = "/programpractic")
+    @ApiOperation("Вывод всех программ")
     public String index(Model model) {
         //model.addAttribute("universe", );
         //return model.toString();
         return com.rest.pract.component.ProgramPracticCom.index().toString();
     }
-    @DeleteMapping(value = "/mentor/{id}")
+    @DeleteMapping(value = "/proogrampractic/{id}")
+    @ApiOperation("Удаление направления практики")
     public String delete(@PathVariable("id") int id, Model model) {
         return com.rest.pract.component.ProgramPracticCom.delete(id);
     }

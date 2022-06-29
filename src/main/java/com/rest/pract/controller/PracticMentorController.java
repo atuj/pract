@@ -15,7 +15,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
+@Api(description = "Контроллер для работы с PRACTICEMENTOR")
 public class PracticMentorController {
     private final PracticMentorCom practicMentorCom;
 
@@ -41,11 +43,13 @@ public class PracticMentorController {
     }
 
     @PostMapping(value="/practicmentor")
+    @ApiOperation("Добавление связи между практикантом и наставником")
     PracticMentor create(@RequestBody PracticMentor practicMentor) {
         PracticMentorCom.save(practicMentor);
         return practicMentor;
     }
     @PatchMapping("/practicmentor/{id}")
+    @ApiOperation("Изменение связи между практикантом и наставником по id")
     public String update(@ModelAttribute("practic") @Valid PracticMentor practicMentor, BindingResult bindingResult,@PathVariable("id") int id) {
         PracticMentorCom.update(id, practicMentor);
         return "OK";

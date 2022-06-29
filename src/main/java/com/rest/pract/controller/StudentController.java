@@ -28,15 +28,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
+@Api(description = "Контроллер для работы с STUDENT")
 class StudentConroller {
-
-    @RequestMapping("/teststudents")
-    public String index() {
-        return "Greetings from Spring Boot!";
-    }
 
     private final StudentCom studentCom;
 
@@ -46,29 +43,33 @@ class StudentConroller {
     }
 
     @PostMapping(value="/student")
+    @ApiOperation("Добавление нового студента")
     Student create(@RequestBody Student student) {
-        StudentCom.save(student);
+        studentCom.save(student);
         return student;
     }
 
     @GetMapping(value = "/student")
+    @ApiOperation("Вывод всех студентов")
     public String indexs() {
-        return UniversCom.index().toString();
+        return studentCom.index().toString();
     }
 
     @GetMapping(value = "/student/{id}")
+    @ApiOperation("Поиск студента по id")
     public String show(@PathVariable("id") int id) {
-        return StudentCom.show(id).toString();
+        return studentCom.show(id).toString();
     }
     @PatchMapping("/student/{id}")
+    @ApiOperation("Обновление информации о студенте по id")
     public String update(@ModelAttribute("student") @Valid Student student, BindingResult bindingResult,@PathVariable("id") int id) {
-        StudentCom.update(id, student);
+        studentCom.update(id, student);
         return "OK";
     }
-
     @DeleteMapping("/{id}")
+    @ApiOperation("Удаление студента по id")
     public String delete(@PathVariable("id") int id) {
-        StudentCom.delete(id);
+        studentCom.delete(id);
         return "OK deletes";
     }
 }

@@ -29,23 +29,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
+@Api(description = "Контроллер для работы с PRACTICECOMPETENCE")
 public class PracticeCompetenceController {
     private final PracticCompetenceCom practicCompetenceCom;
-
 
     public PracticeCompetenceController (PracticCompetenceCom practicCompetenceCom){
         this.practicCompetenceCom = practicCompetenceCom;
     }
-
     @PostMapping(value="/practicompetence")
+    @ApiOperation("Присваиваем практиканту компетенции")
     PracticCompetence create(@RequestBody PracticCompetence practicCompetence) {
         PracticCompetenceCom.save(practicCompetence);
         return practicCompetence;
     }
     @PatchMapping("/practicompetence/{id}")
+    @ApiOperation("Изменяем компетентность у практиканта через id практиканта")
     public String update(@ModelAttribute("practic") @Valid PracticCompetence practicCompetence, BindingResult bindingResult,@PathVariable("id") int id) {
         PracticCompetenceCom.update(id, practicCompetence);
         return "OK";

@@ -42,7 +42,7 @@ class MentorController {
     public MentorController (MentorCom mentorCom){
         this.mentorCom = mentorCom;
     }
-    
+
     @PostMapping(value="/dmentor")
     @ApiOperation("Добавление нового наставника")
     Mentor create(@RequestBody Mentor mentor) {
@@ -50,7 +50,7 @@ class MentorController {
         MentorCom.save(mentor);
         return mentor;
     }
-    
+
     @GetMapping(value = "/dmentor")
     @ApiOperation("Получение списка всех наставников")
     public String index(Model model) {

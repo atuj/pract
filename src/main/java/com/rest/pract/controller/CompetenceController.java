@@ -8,6 +8,8 @@ import com.rest.pract.component.UniversCom;
 import com.rest.pract.models.Univers;
 
 import antlr.collections.List;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -32,21 +34,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
+@Api(description = "Контроллер для работы с COMPETENCE")
 public class CompetenceController {
-    
-private final CompetenceCom competenceCom;
 
-public CompetenceController(CompetenceCom competenceCom) {
-    this.competenceCom = competenceCom;
-}
+    private final CompetenceCom competenceCom;
 
-@PostMapping(value="/competence")
+    public CompetenceController(CompetenceCom competenceCom) {
+        this.competenceCom = competenceCom;
+    }
+
+    @PostMapping(value="/competence")
+    @ApiOperation("Добавление новой компетенции")
     Competence create(@RequestBody Competence competence) {
         CompetenceCom.save(competence);
         return competence;
     }
-
-
-
-
 }
+
